@@ -64,7 +64,7 @@ INSERT INTO EJEMPLAR (isbn_libro, nro_ejemplar, estado_fisico) VALUES
 
 -- 6. SOCIOS (30)
 INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
-('35123456', 'Juan', 'Perez', 'juan@email.com', '2025-01-10', 'Activo'),
+('35123456', 'Juan', 'Perez', 'juancraftero777@email.com', '2025-01-10', 'Activo'),
 ('28456789', 'Maria', 'Gomez', 'maria@email.com', '2025-02-15', 'Activo'),
 ('41234567', 'Carlos', 'Lopez', 'carlos@email.com', '2025-03-20', 'Suspendido'),
 ('33987654', 'Ana', 'Martinez', 'ana@email.com', '2025-04-25', 'Activo'),
@@ -72,18 +72,18 @@ INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
 ('45678901', 'Laura', 'Fernandez', 'laura@email.com', '2025-06-05', 'Activo'),
 ('31445566', 'Diego', 'Gonzalez', 'diego@email.com', '2025-07-10', 'Activo'),
 ('40123987', 'Sofia', 'Diaz', 'sofia@email.com', '2025-08-15', 'Activo'),
-('27889900', 'Javier', 'Hernandez', 'javier@email.com', '2025-09-20', 'Baja'),
+('27889900', 'Valentin', 'Paccot', 'PP@email.com', '2025-09-20', 'Baja'),
 ('38556677', 'Marta', 'Alvarez', 'marta@email.com', '2025-10-25', 'Activo'),
 ('42334455', 'Pedro', 'Romero', 'pedro@email.com', '2026-01-05', 'Activo'),
 ('36778899', 'Lucia', 'Suarez', 'lucia@email.com', '2026-01-10', 'Activo'),
 ('25112244', 'Jorge', 'Torres', 'jorge@email.com', '2026-01-15', 'Activo'),
 ('39445522', 'Elena', 'Ruiz', 'elena@email.com', '2026-01-20', 'Activo'),
-('34556611', 'Raul', 'Ramirez', 'raul@email.com', '2026-01-25', 'Activo'),
+('34556611', 'Camilo', 'Tommasi', 'camilo@email.com', '2026-01-25', 'Activo'),
 ('43223344', 'Paula', 'Flores', 'paula@email.com', '2026-02-01', 'Activo'),
 ('30113355', 'Andres', 'Acosta', 'andres@email.com', '2026-02-05', 'Activo'),
 ('26998877', 'Silvia', 'Medina', 'silvia@email.com', '2026-02-10', 'Suspendido'),
 ('44556677', 'Martin', 'Rojas', 'martin@email.com', '2026-02-15', 'Activo'),
-('37221100', 'Carmen', 'Molina', 'carmen@email.com', '2026-02-20', 'Activo'),
+('37221100', 'Valentino', 'Gussalli', 'valentino@email.com', '2026-02-20', 'Activo'),
 ('32445588', 'Roberto', 'Castro', 'roberto@email.com', '2026-03-01', 'Activo'),
 ('24887766', 'Teresa', 'Ortiz', 'teresa@email.com', '2026-03-05', 'Activo'),
 ('41998833', 'Fernando', 'Silva', 'fernando@email.com', '2026-03-10', 'Activo'),
@@ -91,9 +91,10 @@ INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
 ('29334455', 'Alejandro', 'Cruz', 'alejandro@email.com', '2026-03-20', 'Activo'),
 ('46112233', 'Natalia', 'Reyes', 'natalia@email.com', '2026-04-01', 'Activo'),
 ('38990011', 'Hugo', 'Morales', 'hugo@email.com', '2026-04-05', 'Activo'),
-('31223344', 'Gabriela', 'Herrera', 'gabriela@email.com', '2026-04-10', 'Activo'),
+('31223344', 'Luciano', 'Herrera', 'luciano@email.com', '2026-04-10', 'Activo'),
 ('40556677', 'Mariano', 'Luna', 'mariano@email.com', '2026-04-15', 'Activo'),
 ('36119988', 'Valeria', 'Cabrera', 'valeria@email.com', '2026-04-20', 'Activo');
+
 
 -- 7. SANCIONES ACTIVAS E INACTIVAS
 INSERT INTO SANCION (id_socio, tipo, fecha_inicio, fecha_fin, motivo) VALUES
