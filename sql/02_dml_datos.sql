@@ -1,8 +1,6 @@
 USE BiblioIA;
 
--- =============================================
 -- 1. GÉNEROS (5)
--- =============================================
 INSERT INTO GENERO (nombre, descripcion) VALUES
 ('Ingeniería de Software', 'Metodologías, procesos unificados y arquitectura'),
 ('Bases de Datos', 'Diseño, modelado relacional y SQL'),
@@ -10,9 +8,7 @@ INSERT INTO GENERO (nombre, descripcion) VALUES
 ('Matemática Computacional', 'Programación lineal y optimización'),
 ('Programación', 'Estructuras de datos dinámicas y algoritmos');
 
--- =============================================
 -- 2. AUTORES (10)
--- =============================================
 INSERT INTO AUTOR (nombre, apellido, nacionalidad) VALUES
 ('Philippe',  'Kruchten',    'Francesa'),
 ('Ian',       'Sommerville', 'Británica'),
@@ -25,10 +21,7 @@ INSERT INTO AUTOR (nombre, apellido, nacionalidad) VALUES
 ('Roger',     'Pressman',    'Estadounidense'),
 ('Ivar',      'Jacobson',    'Sueca');
 
--- =============================================
 -- 3. LIBROS (20)
--- stock_disponible se ajusta más abajo según préstamos activos
--- =============================================
 INSERT INTO LIBRO (isbn, titulo, anio_publicacion, stock_total, stock_disponible) VALUES
 ('978-0201123456', 'Arquitectura de Software: Vistas 4+1',          1995, 3, 2),
 ('978-0133970777', 'Ingeniería de Software: Un Enfoque Práctico',   2014, 5, 2),
@@ -51,9 +44,8 @@ INSERT INTO LIBRO (isbn, titulo, anio_publicacion, stock_total, stock_disponible
 ('978-0133970793', 'El Método Simplex',                              2003, 3, 2),
 ('978-0133970794', 'Normalización de Bases de Datos',               2016, 4, 3);
 
--- =============================================
 -- 4. LIBRO_AUTOR (todos los libros con autor)
--- =============================================
+
 INSERT INTO LIBRO_AUTOR (isbn_libro, id_autor) VALUES
 ('978-0201123456', 1),
 ('978-0133970777', 9),
@@ -77,9 +69,7 @@ INSERT INTO LIBRO_AUTOR (isbn_libro, id_autor) VALUES
 ('978-0133970793', 7),
 ('978-0133970794', 3);
 
--- =============================================
 -- 5. LIBRO_GENERO (todos los libros con género)
--- =============================================
 INSERT INTO LIBRO_GENERO (isbn_libro, id_genero) VALUES
 ('978-0201123456', 1),
 ('978-0133970777', 1),
@@ -102,10 +92,7 @@ INSERT INTO LIBRO_GENERO (isbn_libro, id_genero) VALUES
 ('978-0133970786', 1),
 ('978-0133970791', 1);
 
--- =============================================
 -- 6. EJEMPLARES (todos los libros tienen ejemplares)
--- Convención: estado_fisico calculado según préstamos activos abajo
--- =============================================
 INSERT INTO EJEMPLAR (isbn_libro, nro_ejemplar, estado_fisico) VALUES
 -- isbn 978-0201123456 (stock 3, 1 activo → 1 Prestado, 2 Disponibles)
 ('978-0201123456', 1, 'Prestado'),
@@ -205,11 +192,9 @@ INSERT INTO EJEMPLAR (isbn_libro, nro_ejemplar, estado_fisico) VALUES
 ('978-0133970794', 3, 'Disponible'),
 ('978-0133970794', 4, 'Disponible');
 
--- =============================================
 -- 7. SOCIOS (30)
--- =============================================
 INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
-('35123456', 'Juan',      'Perez',     'juancraftero777@email.com', '2025-01-10', 'Activo'),
+('35123456', 'Juan',      'Weigandt',     'juancraftero777@email.com', '2025-01-10', 'Activo'),
 ('28456789', 'Maria',     'Gomez',     'maria@email.com',           '2025-02-15', 'Activo'),
 ('41234567', 'Carlos',    'Lopez',     'carlos@email.com',          '2025-03-20', 'Suspendido'),
 ('33987654', 'Ana',       'Martinez',  'ana@email.com',             '2025-04-25', 'Activo'),
@@ -240,11 +225,7 @@ INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
 ('40556677', 'Mariano',   'Luna',      'mariano@email.com',         '2026-04-15', 'Activo'),
 ('36119988', 'Valeria',   'Cabrera',   'valeria@email.com',         '2026-04-20', 'Activo');
 
--- =============================================
 -- 8. SANCIONES
--- Socios 3 y 18 ya están Suspendidos, sus sanciones vigentes
--- Se agregan históricas y adicionales para tener datos ricos
--- =============================================
 INSERT INTO SANCION (id_socio, tipo, fecha_inicio, fecha_fin, motivo) VALUES
 -- Sanciones activas (fecha_fin >= hoy 2026-06-09)
 (3,  'Mora',  '2026-06-01', '2026-06-20', 'Devolución tardía — 7 días de mora'),
@@ -258,30 +239,8 @@ INSERT INTO SANCION (id_socio, tipo, fecha_inicio, fecha_fin, motivo) VALUES
 (11, 'Mora',  '2026-03-05', '2026-03-12', 'Retraso en devolución de 4 días'),
 (14, 'Mora',  '2026-04-01', '2026-04-08', 'Mora leve — 2 días');
 
--- =============================================
 -- 9. PRÉSTAMOS (55 registros)
--- Referencia de id_ejemplar por libro:
---   isbn 978-0201123456 → ej 1,2,3
---   isbn 978-0133970777 → ej 4,5,6,7,8
---   isbn 978-0137081073 → ej 9,10,11,12
---   isbn 978-0133970778 → ej 13,14,15,16
---   isbn 978-0133970779 → ej 17,18,19,20,21,22
---   isbn 978-0133970780 → ej 23,24,25,26,27
---   isbn 978-0133970781 → ej 28,29,30,31
---   isbn 978-0133970782 → ej 32,33,34,35,36
---   isbn 978-0133970783 → ej 37,38,39
---   isbn 978-0133970784 → ej 40,41
---   isbn 978-0133970785 → ej 42,43,44,45
---   isbn 978-0133970786 → ej 46,47,48
---   isbn 978-0133970787 → ej 49,50
---   isbn 978-0133970788 → ej 51,52,53
---   isbn 978-0133970789 → ej 54,55,56,57
---   isbn 978-0133970790 → ej 58,59,60,61,62
---   isbn 978-0133970791 → ej 63,64,65,66,67,68
---   isbn 978-0133970792 → ej 69,70
---   isbn 978-0133970793 → ej 71,72,73
---   isbn 978-0133970794 → ej 74,75,76,77
--- =============================================
+
 INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
 -- ---- ACTIVOS (26 préstamos — coinciden con ejemplares Prestados) ----
 (1,  1,  '2026-05-26', '2026-06-09', NULL, 'Activo'),
