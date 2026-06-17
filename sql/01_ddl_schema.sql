@@ -14,11 +14,9 @@ CREATE TABLE SOCIO (
     CONSTRAINT chk_estado_socio CHECK (estado IN ('Activo', 'Suspendido', 'Baja'))
 );
 
-CREATE TABLE AUTOR (
-    id_autor INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    apellido VARCHAR(50) NOT NULL,
-    nacionalidad VARCHAR(50)
+CREATE TABLE NACIONALIDAD(
+	id_nacionalidad INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE GENERO (
@@ -37,6 +35,15 @@ CREATE TABLE LIBRO (
 );
 
 -- 2. TABLAS INTERMEDIAS (Normalización Muchos a Muchos)
+
+CREATE TABLE AUTOR (
+    id_autor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    id_nacionalidad INT NOT NULL,
+    FOREIGN KEY (id_nacionalidad) REFERENCES NACIONALIDAD(id_nacionalidad) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
 CREATE TABLE LIBRO_AUTOR (
     isbn_libro VARCHAR(20),
     id_autor INT,
