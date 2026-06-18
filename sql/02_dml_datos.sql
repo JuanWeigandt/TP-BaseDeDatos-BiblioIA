@@ -6,46 +6,110 @@ INSERT INTO GENERO (nombre, descripcion) VALUES
 ('Bases de Datos', 'Diseño, modelado relacional y SQL'),
 ('Sistemas Operativos', 'Sistemas de archivos, kernel y memoria'),
 ('Matemática Computacional', 'Programación lineal y optimización'),
-('Programación', 'Estructuras de datos dinámicas y algoritmos');
+('Programación', 'Estructuras de datos dinámicas y algoritmos'),
+('Redes y Telecomunicaciones', 'Protocolos, arquitectura de redes y comunicaciones'),
+('Inteligencia Artificial',    'Aprendizaje automático, redes neuronales y agentes'),
+('Seguridad Informática',      'Criptografía, hacking ético y auditoría de sistemas'),
+('Desarrollo Web',             'Frontend, backend y arquitecturas web modernas'),
+('Compiladores',               'Análisis léxico, sintáctico y generación de código');
 
--- 2. AUTORES (10)
-INSERT INTO AUTOR (nombre, apellido, nacionalidad) VALUES
-('Philippe',  'Kruchten',    'Francesa'),
-('Ian',       'Sommerville', 'Británica'),
-('Ramez',     'Elmasri',     'Egipcia'),
-('Shamkant',  'Navathe',     'India'),
-('Abraham',   'Silberschatz','Estadounidense'),
-('Andrew',    'Tanenbaum',   'Estadounidense'),
-('Hamdy',     'Taha',        'Egipcia'),
-('Niklaus',   'Wirth',       'Suiza'),
-('Roger',     'Pressman',    'Estadounidense'),
-('Ivar',      'Jacobson',    'Sueca');
+-- 2. NACIONALIDADES (7) 
+INSERT INTO NACIONALIDAD (nombre) VALUES
+('Francesa'),       -- ID 1
+('Británica'),      -- ID 2
+('Egipcia'),        -- ID 3
+('India'),          -- ID 4
+('Estadounidense'), -- ID 5
+('Suiza'),          -- ID 6
+('Sueca'),          -- ID 7
+('Alemana'),    -- 8
+('Canadiense'), -- 9
+('Holandesa'),  -- 10
+('Israelí'),    -- 11
+('Japonesa');   -- 12
 
--- 3. LIBROS (20)
+-- 3. AUTORES (10) - Apuntando a id_nacionalidad
+INSERT INTO AUTOR (nombre, apellido, id_nacionalidad) VALUES
+('Philippe',  'Kruchten',    1), -- Francesa
+('Ian',       'Sommerville', 2), -- Británica
+('Ramez',     'Elmasri',     3), -- Egipcia
+('Shamkant',  'Navathe',     4), -- India
+('Abraham',   'Silberschatz',5), -- Estadounidense
+('Andrew',    'Tanenbaum',   5), -- Estadounidense
+('Hamdy',     'Taha',        3), -- Egipcia
+('Niklaus',   'Wirth',       6), -- Suiza
+('Roger',     'Pressman',    5), -- Estadounidense
+('Ivar',      'Jacobson',    7), -- Sueca
+('James',    'Kurose',       5),  -- Estadounidense
+('Keith',    'Ross',         9),  -- Canadiense
+('Stuart',   'Russell',      2),  -- Británica
+('Peter',    'Norvig',       5),  -- Estadounidense
+('Bruce',    'Schneier',     5),  -- Estadounidense
+('William',  'Stallings',    5),  -- Estadounidense
+('Martin',   'Fowler',       2),  -- Británica
+('Robert',   'Martin',       5),  -- Estadounidense
+('Alfred',   'Aho',          5),  -- Estadounidense
+('Jeffrey',  'Ullman',       5),  -- Estadounidense
+('Andrew',   'Hunt',         5),  -- Estadounidense
+('David',    'Thomas',       2),  -- Británica
+('Erich',    'Gamma',        6),  -- Suiza
+('Yukihiro', 'Matsumoto',    12), -- Japonesa
+('Edsger',   'Dijkstra',     10); -- Holandesa
+
+-- 4. LIBROS (20)
 INSERT INTO LIBRO (isbn, titulo, anio_publicacion, stock_total, stock_disponible) VALUES
-('978-0201123456', 'Arquitectura de Software: Vistas 4+1',          1995, 3, 2),
+('978-0201123456', 'Arquitectura de Software: Vistas 4+1',         1995, 3, 2),
 ('978-0133970777', 'Ingeniería de Software: Un Enfoque Práctico',   2014, 5, 2),
 ('978-0137081073', 'El Proceso Unificado de Desarrollo de Software', 1999, 4, 2),
-('978-0133970778', 'Ingeniería de Software',                         2011, 4, 3),
+('978-0133970778', 'Ingeniería de Software',                        2011, 4, 3),
 ('978-0133970779', 'Sistemas de Bases de Datos: Conceptos',         2015, 6, 4),
 ('978-0133970780', 'Fundamentos de Bases de Datos',                 2010, 5, 3),
-('978-0133970781', 'Sistemas Operativos Modernos',                   2014, 4, 1),
+('978-0133970781', 'Sistemas Operativos Modernos',                  2014, 4, 1),
 ('978-0133970782', 'Conceptos de Sistemas Operativos',              2018, 5, 2),
-('978-0133970783', 'Investigación de Operaciones',                   2017, 3, 2),
+('978-0133970783', 'Investigación de Operaciones',                  2017, 3, 2),
 ('978-0133970784', 'Algoritmos y Estructuras de Datos en Pascal',   1985, 2, 1),
 ('978-0133970785', 'Diseño de Bases de Datos Relacionales',         2008, 4, 2),
 ('978-0133970786', 'Patrones de Arquitectura de Software',          2001, 3, 2),
-('978-0133970787', 'Administración de Linux',                        2020, 2, 1),
+('978-0133970787', 'Administración de Linux',                       2020, 2, 1),
 ('978-0133970788', 'Modelos Lineales con LINDO',                    2005, 3, 2),
-('978-0133970789', 'Programación Estructurada',                      1990, 4, 2),
-('978-0133970790', 'SQL Avanzado',                                   2019, 5, 3),
-('978-0133970791', 'Metodologías Ágiles y Scrum',                   2021, 6, 4),
+('978-0133970789', 'Programación Estructurada',                     1990, 4, 2),
+('978-0133970790', 'SQL Avanzado',                                 2019, 5, 3),
+('978-0133970791', 'Metodologías Ágiles y Scrum',                  2021, 6, 4),
 ('978-0133970792', 'Sistemas de Archivos NTFS y VFS',               2012, 2, 1),
-('978-0133970793', 'El Método Simplex',                              2003, 3, 2),
-('978-0133970794', 'Normalización de Bases de Datos',               2016, 4, 3);
+('978-0133970793', 'El Método Simplex',                             2003, 3, 2),
+('978-0133970794', 'Normalización de Bases de Datos',               2016, 4, 3),
+('978-0136081559', 'Redes de Computadoras: Un Enfoque Descendente',     2017, 5, 3),
+('978-0134610993', 'Inteligencia Artificial: Un Enfoque Moderno',       2020, 6, 4),
+('978-1119096726', 'Criptografía Aplicada',                             2015, 3, 1),
+('978-0134444321', 'Seguridad en Redes',                                2018, 4, 2),
+('978-0201633610', 'Patrones de Diseño',                                1994, 4, 2),
+('978-0132350884', 'Código Limpio',                                     2008, 6, 4),
+('978-0201100884', 'Compiladores: Principios, Técnicas y Herramientas', 1986, 3, 1),
+('978-0596007126', 'El Programador Pragmático',                        1999, 4, 2),
+('978-1491950357', 'Aprendiendo React',                                 2017, 5, 3),
+('978-0596516178', 'JavaScript: Las Buenas Partes',                     2008, 3, 2),
+('978-0134494166', 'Arquitectura Limpia',                               2017, 4, 3),
+('978-0596805524', 'Construyendo APIs REST',                            2013, 3, 2),
+('978-0134757599', 'Refactorización: Mejorando el Diseño del Código',   2018, 4, 2),
+('978-0201615880', 'Patrones de Análisis',                              1996, 2, 1),
+('978-0321125215', 'Diseño Dirigido por el Dominio',                    2003, 3, 1),
+('978-1937785499', 'Aprende Python en Profundidad',                     2014, 5, 3),
+('978-0073523323', 'Algoritmos: Diseño y Análisis',                     2011, 4, 2),
+('978-0262033848', 'Introducción a los Algoritmos',                     2009, 6, 3),
+('978-0596009205', 'Cabeza Primero en Diseño de Patrones',              2004, 3, 2),
+('978-0321356680', 'Effective Java',                                    2008, 4, 2),
+('978-0135957059', 'El Programador Pragmático (20 Aniversario)',        2019, 4, 3),
+('978-0596007683', 'Aprendiendo SQL',                                   2009, 5, 3),
+('978-1449373320', 'Aprendiendo Docker',                                2016, 3, 2),
+('978-1492040347', 'Kubernetes en Acción',                              2019, 4, 2),
+('978-0134757003', 'Sistemas Distribuidos: Principios y Paradigmas',    2017, 4, 2),
+('978-0596527068', 'Aprendiendo Sistemas Operativos',                   2007, 3, 1),
+('978-0596514983', 'Algoritmos en Java',                                 2007, 4, 2),
+('978-1593275846', 'Estructuras de Datos en Python',                    2015, 5, 3),
+('978-0596158039', 'Programación Funcional con Scala',                  2011, 3, 1),
+('978-1491901859', 'Microservicios: Diseño y Construcción',             2015, 4, 2);
 
--- 4. LIBRO_AUTOR (todos los libros con autor)
-
+-- 5. LIBRO_AUTOR (todos los libros con autor)
 INSERT INTO LIBRO_AUTOR (isbn_libro, id_autor) VALUES
 ('978-0201123456', 1),
 ('978-0133970777', 9),
@@ -67,9 +131,45 @@ INSERT INTO LIBRO_AUTOR (isbn_libro, id_autor) VALUES
 ('978-0133970791', 2),
 ('978-0133970792', 6),
 ('978-0133970793', 7),
-('978-0133970794', 3);
+('978-0133970794', 3),
+('978-0136081559', 11),
+('978-0136081559', 12),
+('978-0134610993', 13),
+('978-0134610993', 14),
+('978-1119096726', 15),
+('978-0134444321', 16),
+('978-0201633610', 23),
+('978-0132350884', 18),
+('978-0201100884', 19),
+('978-0201100884', 20),
+('978-0596007126', 21),
+('978-0596007126', 22),
+('978-1491950357', 17),
+('978-0596516178', 17),
+('978-0134494166', 18),
+('978-0596805524', 17),
+('978-0134757599', 17),
+('978-0201615880', 17),
+('978-0321125215', 17),
+('978-1937785499', 17),
+('978-0073523323', 19),
+('978-0262033848', 19),
+('978-0262033848', 20),
+('978-0596009205', 17),
+('978-0321356680', 17),
+('978-0135957059', 21),
+('978-0135957059', 22),
+('978-0596007683', 17),
+('978-1449373320', 17),
+('978-1492040347', 17),
+('978-0134757003', 16),
+('978-0596527068', 6),
+('978-0596514983', 17),
+('978-1593275846', 17),
+('978-0596158039', 17),
+('978-1491901859', 17);
 
--- 5. LIBRO_GENERO (todos los libros con género)
+-- 6. LIBRO_GENERO (todos los libros con género)
 INSERT INTO LIBRO_GENERO (isbn_libro, id_genero) VALUES
 ('978-0201123456', 1),
 ('978-0133970777', 1),
@@ -90,159 +190,182 @@ INSERT INTO LIBRO_GENERO (isbn_libro, id_genero) VALUES
 ('978-0133970784', 5),
 ('978-0133970789', 5),
 ('978-0133970786', 1),
-('978-0133970791', 1);
+('978-0133970791', 1),
+('978-0136081559', 6),
+('978-0134610993', 7),
+('978-1119096726', 8),
+('978-0134444321', 8),
+('978-0134444321', 6),
+('978-0201633610', 1),
+('978-0132350884', 5),
+('978-0201100884', 10),
+('978-0596007126', 5),
+('978-1491950357', 9),
+('978-0596516178', 9),
+('978-0134494166', 1),
+('978-0596805524', 9),
+('978-0134757599', 5),
+('978-0201615880', 1),
+('978-0321125215', 1),
+('978-1937785499', 5),
+('978-0073523323', 5),
+('978-0262033848', 5),
+('978-0596009205', 1),
+('978-0321356680', 5),
+('978-0135957059', 5),
+('978-0596007683', 2),
+('978-1449373320', 3),
+('978-1492040347', 6),
+('978-0134757003', 3),
+('978-0596527068', 3),
+('978-0596514983', 5),
+('978-1593275846', 5),
+('978-0596158039', 5),
+('978-1491901859', 9);
 
--- 6. EJEMPLARES (todos los libros tienen ejemplares)
+-- 7. EJEMPLARES (todos los libros tienen ejemplares)
 INSERT INTO EJEMPLAR (isbn_libro, nro_ejemplar, estado_fisico) VALUES
--- isbn 978-0201123456 (stock 3, 1 activo → 1 Prestado, 2 Disponibles)
-('978-0201123456', 1, 'Prestado'),
-('978-0201123456', 2, 'Disponible'),
-('978-0201123456', 3, 'Disponible'),
--- isbn 978-0133970777 (stock 5, 2 activos → 2 Prestados, 3 Disponibles)
-('978-0133970777', 1, 'Prestado'),
-('978-0133970777', 2, 'Prestado'),
-('978-0133970777', 3, 'Prestado'),
-('978-0133970777', 4, 'Disponible'),
-('978-0133970777', 5, 'Disponible'),
--- isbn 978-0137081073 (stock 4, 2 activos → 2 Prestados, 1 Disponible, 1 Baja)
-('978-0137081073', 1, 'Prestado'),
-('978-0137081073', 2, 'Prestado'),
-('978-0137081073', 3, 'Disponible'),
-('978-0137081073', 4, 'Baja'),
--- isbn 978-0133970778 (stock 4, 1 activo → 1 Prestado, 3 Disponibles)
-('978-0133970778', 1, 'Prestado'),
-('978-0133970778', 2, 'Disponible'),
-('978-0133970778', 3, 'Disponible'),
-('978-0133970778', 4, 'Disponible'),
--- isbn 978-0133970779 (stock 6, 2 activos → 2 Prestados, 4 Disponibles)
-('978-0133970779', 1, 'Prestado'),
-('978-0133970779', 2, 'Prestado'),
-('978-0133970779', 3, 'Disponible'),
-('978-0133970779', 4, 'Disponible'),
-('978-0133970779', 5, 'Disponible'),
-('978-0133970779', 6, 'Disponible'),
--- isbn 978-0133970780 (stock 5, 2 activos → 2 Prestados, 3 Disponibles)
-('978-0133970780', 1, 'Prestado'),
-('978-0133970780', 2, 'Prestado'),
-('978-0133970780', 3, 'Disponible'),
-('978-0133970780', 4, 'Disponible'),
-('978-0133970780', 5, 'Disponible'),
--- isbn 978-0133970781 (stock 4, 2 activos → 2 Prestados, 2 Disponibles)
-('978-0133970781', 1, 'Prestado'),
-('978-0133970781', 2, 'Prestado'),
-('978-0133970781', 3, 'Prestado'),
-('978-0133970781', 4, 'Disponible'),
--- isbn 978-0133970782 (stock 5, 2 activos → 2 Prestados, 3 Disponibles)
-('978-0133970782', 1, 'Prestado'),
-('978-0133970782', 2, 'Prestado'),
-('978-0133970782', 3, 'Prestado'),
-('978-0133970782', 4, 'Disponible'),
-('978-0133970782', 5, 'Disponible'),
--- isbn 978-0133970783 (stock 3, 1 activo → 1 Prestado, 2 Disponibles)
-('978-0133970783', 1, 'Prestado'),
-('978-0133970783', 2, 'Disponible'),
-('978-0133970783', 3, 'Disponible'),
--- isbn 978-0133970784 (stock 2, 1 activo → 1 Prestado, 1 Disponible)
-('978-0133970784', 1, 'Prestado'),
-('978-0133970784', 2, 'Disponible'),
--- isbn 978-0133970785 (stock 4, 1 activo → 1 Prestado, 3 Disponibles)
-('978-0133970785', 1, 'Prestado'),
-('978-0133970785', 2, 'Prestado'),
-('978-0133970785', 3, 'Disponible'),
-('978-0133970785', 4, 'Disponible'),
--- isbn 978-0133970786 (stock 3, 1 activo → 1 Prestado, 2 Disponibles)
-('978-0133970786', 1, 'Prestado'),
-('978-0133970786', 2, 'Disponible'),
-('978-0133970786', 3, 'Disponible'),
--- isbn 978-0133970787 (stock 2, 1 activo → 1 Prestado, 1 Disponible)
-('978-0133970787', 1, 'Prestado'),
-('978-0133970787', 2, 'Disponible'),
--- isbn 978-0133970788 (stock 3, 1 activo → 1 Prestado, 2 Disponibles)
-('978-0133970788', 1, 'Prestado'),
-('978-0133970788', 2, 'Disponible'),
-('978-0133970788', 3, 'Disponible'),
--- isbn 978-0133970789 (stock 4, 1 activo → 1 Prestado, 3 Disponibles)
-('978-0133970789', 1, 'Prestado'),
-('978-0133970789', 2, 'Prestado'),
-('978-0133970789', 3, 'Disponible'),
-('978-0133970789', 4, 'Disponible'),
--- isbn 978-0133970790 (stock 5, 2 activos → 2 Prestados, 3 Disponibles)
-('978-0133970790', 1, 'Prestado'),
-('978-0133970790', 2, 'Prestado'),
-('978-0133970790', 3, 'Disponible'),
-('978-0133970790', 4, 'Disponible'),
-('978-0133970790', 5, 'Disponible'),
--- isbn 978-0133970791 (stock 6, 2 activos → 2 Prestados, 4 Disponibles)
-('978-0133970791', 1, 'Prestado'),
-('978-0133970791', 2, 'Prestado'),
-('978-0133970791', 3, 'Disponible'),
-('978-0133970791', 4, 'Disponible'),
-('978-0133970791', 5, 'Disponible'),
-('978-0133970791', 6, 'Disponible'),
--- isbn 978-0133970792 (stock 2, 1 activo → 1 Prestado, 1 Disponible)
-('978-0133970792', 1, 'Prestado'),
-('978-0133970792', 2, 'Disponible'),
--- isbn 978-0133970793 (stock 3, 1 activo → 1 Prestado, 2 Disponibles)
-('978-0133970793', 1, 'Prestado'),
-('978-0133970793', 2, 'Disponible'),
-('978-0133970793', 3, 'Disponible'),
--- isbn 978-0133970794 (stock 4, 1 activo → 1 Prestado, 3 Disponibles)
-('978-0133970794', 1, 'Prestado'),
-('978-0133970794', 2, 'Disponible'),
-('978-0133970794', 3, 'Disponible'),
-('978-0133970794', 4, 'Disponible');
+('978-0201123456', 1, 'Prestado'), ('978-0201123456', 2, 'Disponible'), ('978-0201123456', 3, 'Disponible'),
+('978-0133970777', 1, 'Prestado'), ('978-0133970777', 2, 'Prestado'), ('978-0133970777', 3, 'Prestado'), ('978-0133970777', 4, 'Disponible'), ('978-0133970777', 5, 'Disponible'),
+('978-0137081073', 1, 'Prestado'), ('978-0137081073', 2, 'Prestado'), ('978-0137081073', 3, 'Disponible'), ('978-0137081073', 4, 'Baja'),
+('978-0133970778', 1, 'Prestado'), ('978-0133970778', 2, 'Disponible'), ('978-0133970778', 3, 'Disponible'), ('978-0133970778', 4, 'Disponible'),
+('978-0133970779', 1, 'Prestado'), ('978-0133970779', 2, 'Prestado'), ('978-0133970779', 3, 'Disponible'), ('978-0133970779', 4, 'Disponible'), ('978-0133970779', 5, 'Disponible'), ('978-0133970779', 6, 'Disponible'),
+('978-0133970780', 1, 'Prestado'), ('978-0133970780', 2, 'Prestado'), ('978-0133970780', 3, 'Disponible'), ('978-0133970780', 4, 'Disponible'), ('978-0133970780', 5, 'Disponible'),
+('978-0133970781', 1, 'Prestado'), ('978-0133970781', 2, 'Prestado'), ('978-0133970781', 3, 'Prestado'), ('978-0133970781', 4, 'Disponible'),
+('978-0133970782', 1, 'Prestado'), ('978-0133970782', 2, 'Prestado'), ('978-0133970782', 3, 'Prestado'), ('978-0133970782', 4, 'Disponible'), ('978-0133970782', 5, 'Disponible'),
+('978-0133970783', 1, 'Prestado'), ('978-0133970783', 2, 'Disponible'), ('978-0133970783', 3, 'Disponible'),
+('978-0133970784', 1, 'Prestado'), ('978-0133970784', 2, 'Disponible'),
+('978-0133970785', 1, 'Prestado'), ('978-0133970785', 2, 'Prestado'), ('978-0133970785', 3, 'Disponible'), ('978-0133970785', 4, 'Disponible'),
+('978-0133970786', 1, 'Prestado'), ('978-0133970786', 2, 'Disponible'), ('978-0133970786', 3, 'Disponible'),
+('978-0133970787', 1, 'Prestado'), ('978-0133970787', 2, 'Disponible'),
+('978-0133970788', 1, 'Prestado'), ('978-0133970788', 2, 'Disponible'), ('978-0133970788', 3, 'Disponible'),
+('978-0133970789', 1, 'Prestado'), ('978-0133970789', 2, 'Prestado'), ('978-0133970789', 3, 'Disponible'), ('978-0133970789', 4, 'Disponible'),
+('978-0133970790', 1, 'Prestado'), ('978-0133970790', 2, 'Prestado'), ('978-0133970790', 3, 'Disponible'), ('978-0133970790', 4, 'Disponible'), ('978-0133970790', 5, 'Disponible'),
+('978-0133970791', 1, 'Prestado'), ('978-0133970791', 2, 'Prestado'), ('978-0133970791', 3, 'Disponible'), ('978-0133970791', 4, 'Disponible'), ('978-0133970791', 5, 'Disponible'), ('978-0133970791', 6, 'Disponible'),
+('978-0133970792', 1, 'Prestado'), ('978-0133970792', 2, 'Disponible'),
+('978-0133970793', 1, 'Prestado'), ('978-0133970793', 2, 'Disponible'), ('978-0133970793', 3, 'Disponible'),
+('978-0133970794', 1, 'Prestado'), ('978-0133970794', 2, 'Disponible'), ('978-0133970794', 3, 'Disponible'), ('978-0133970794', 4, 'Disponible'),
+('978-0136081559', 1, 'Prestado'), ('978-0136081559', 2, 'Disponible'), ('978-0136081559', 3, 'Disponible'), ('978-0136081559', 4, 'Disponible'), ('978-0136081559', 5, 'Disponible'),
+('978-0134610993', 1, 'Prestado'), ('978-0134610993', 2, 'Prestado'), ('978-0134610993', 3, 'Disponible'), ('978-0134610993', 4, 'Disponible'), ('978-0134610993', 5, 'Disponible'), ('978-0134610993', 6, 'Disponible'),
+('978-1119096726', 1, 'Prestado'), ('978-1119096726', 2, 'Prestado'), ('978-1119096726', 3, 'Disponible'),
+('978-0134444321', 1, 'Prestado'), ('978-0134444321', 2, 'Disponible'), ('978-0134444321', 3, 'Disponible'), ('978-0134444321', 4, 'Disponible'),
+('978-0201633610', 1, 'Prestado'), ('978-0201633610', 2, 'Disponible'), ('978-0201633610', 3, 'Disponible'), ('978-0201633610', 4, 'Disponible'),
+('978-0132350884', 1, 'Prestado'), ('978-0132350884', 2, 'Prestado'), ('978-0132350884', 3, 'Disponible'), ('978-0132350884', 4, 'Disponible'), ('978-0132350884', 5, 'Disponible'), ('978-0132350884', 6, 'Disponible'),
+('978-0201100884', 1, 'Prestado'), ('978-0201100884', 2, 'Prestado'), ('978-0201100884', 3, 'Baja'),
+('978-0596007126', 1, 'Prestado'), ('978-0596007126', 2, 'Disponible'), ('978-0596007126', 3, 'Disponible'), ('978-0596007126', 4, 'Disponible'),
+('978-1491950357', 1, 'Prestado'), ('978-1491950357', 2, 'Prestado'), ('978-1491950357', 3, 'Disponible'), ('978-1491950357', 4, 'Disponible'), ('978-1491950357', 5, 'Disponible'),
+('978-0596516178', 1, 'Prestado'), ('978-0596516178', 2, 'Disponible'), ('978-0596516178', 3, 'Disponible'),
+('978-0134494166', 1, 'Prestado'), ('978-0134494166', 2, 'Disponible'), ('978-0134494166', 3, 'Disponible'), ('978-0134494166', 4, 'Disponible'),
+('978-0596805524', 1, 'Prestado'), ('978-0596805524', 2, 'Disponible'), ('978-0596805524', 3, 'Disponible'),
+('978-0134757599', 1, 'Prestado'), ('978-0134757599', 2, 'Prestado'), ('978-0134757599', 3, 'Disponible'), ('978-0134757599', 4, 'Disponible'),
+('978-0201615880', 1, 'Prestado'), ('978-0201615880', 2, 'Disponible'),
+('978-0321125215', 1, 'Prestado'), ('978-0321125215', 2, 'Baja'), ('978-0321125215', 3, 'Disponible'),
+('978-1937785499', 1, 'Prestado'), ('978-1937785499', 2, 'Prestado'), ('978-1937785499', 3, 'Disponible'), ('978-1937785499', 4, 'Disponible'), ('978-1937785499', 5, 'Disponible'),
+('978-0073523323', 1, 'Prestado'), ('978-0073523323', 2, 'Disponible'), ('978-0073523323', 3, 'Disponible'), ('978-0073523323', 4, 'Disponible'),
+('978-0262033848', 1, 'Prestado'), ('978-0262033848', 2, 'Prestado'), ('978-0262033848', 3, 'Disponible'), ('978-0262033848', 4, 'Disponible'), ('978-0262033848', 5, 'Disponible'), ('978-0262033848', 6, 'Disponible'),
+('978-0596009205', 1, 'Prestado'), ('978-0596009205', 2, 'Disponible'), ('978-0596009205', 3, 'Disponible'),
+('978-0321356680', 1, 'Prestado'), ('978-0321356680', 2, 'Disponible'), ('978-0321356680', 3, 'Disponible'), ('978-0321356680', 4, 'Disponible'),
+('978-0135957059', 1, 'Prestado'), ('978-0135957059', 2, 'Disponible'), ('978-0135957059', 3, 'Disponible'), ('978-0135957059', 4, 'Disponible'),
+('978-0596007683', 1, 'Prestado'), ('978-0596007683', 2, 'Prestado'), ('978-0596007683', 3, 'Disponible'), ('978-0596007683', 4, 'Disponible'), ('978-0596007683', 5, 'Disponible'),
+('978-1449373320', 1, 'Prestado'), ('978-1449373320', 2, 'Disponible'), ('978-1449373320', 3, 'Disponible'),
+('978-1492040347', 1, 'Prestado'), ('978-1492040347', 2, 'Prestado'), ('978-1492040347', 3, 'Disponible'), ('978-1492040347', 4, 'Disponible'),
+('978-0134757003', 1, 'Prestado'), ('978-0134757003', 2, 'Disponible'), ('978-0134757003', 3, 'Disponible'), ('978-0134757003', 4, 'Disponible'),
+('978-0596527068', 1, 'Prestado'), ('978-0596527068', 2, 'Disponible'), ('978-0596527068', 3, 'Disponible'),
+('978-0596514983', 1, 'Prestado'), ('978-0596514983', 2, 'Prestado'), ('978-0596514983', 3, 'Disponible'), ('978-0596514983', 4, 'Disponible'),
+('978-1593275846', 1, 'Prestado'), ('978-1593275846', 2, 'Disponible'), ('978-1593275846', 3, 'Disponible'), ('978-1593275846', 4, 'Disponible'), ('978-1593275846', 5, 'Disponible'),
+('978-0596158039', 1, 'Prestado'), ('978-0596158039', 2, 'Disponible'), ('978-0596158039', 3, 'Disponible'),
+('978-1491901859', 1, 'Prestado'), ('978-1491901859', 2, 'Prestado'), ('978-1491901859', 3, 'Disponible'), ('978-1491901859', 4, 'Disponible');
 
--- 7. SOCIOS (30)
+-- 8. SOCIOS (30)
 INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
 ('35123456', 'Juan',      'Weigandt',     'juancraftero777@email.com', '2025-01-10', 'Activo'),
-('28456789', 'Maria',     'Gomez',     'maria@email.com',           '2025-02-15', 'Activo'),
-('41234567', 'Carlos',    'Lopez',     'carlos@email.com',          '2025-03-20', 'Suspendido'),
-('33987654', 'Ana',       'Martinez',  'ana@email.com',             '2025-04-25', 'Activo'),
-('29112233', 'Luis',      'Rodriguez', 'luis@email.com',            '2025-05-30', 'Activo'),
-('45678901', 'Laura',     'Fernandez', 'laura@email.com',           '2025-06-05', 'Activo'),
-('31445566', 'Diego',     'Gonzalez',  'diego@email.com',           '2025-07-10', 'Activo'),
-('40123987', 'Sofia',     'Diaz',      'sofia@email.com',           '2025-08-15', 'Activo'),
-('27889900', 'Valentin',  'Paccot',    'PP@email.com',              '2025-09-20', 'Baja'),
-('38556677', 'Marta',     'Alvarez',   'marta@email.com',           '2025-10-25', 'Activo'),
-('42334455', 'Pedro',     'Romero',    'pedro@email.com',           '2026-01-05', 'Activo'),
-('36778899', 'Lucia',     'Suarez',    'lucia@email.com',           '2026-01-10', 'Activo'),
-('25112244', 'Jorge',     'Torres',    'jorge@email.com',           '2026-01-15', 'Activo'),
-('39445522', 'Elena',     'Ruiz',      'elena@email.com',           '2026-01-20', 'Activo'),
-('34556611', 'Camilo',    'Tommasi',   'camilo@email.com',          '2026-01-25', 'Activo'),
-('43223344', 'Paula',     'Flores',    'paula@email.com',           '2026-02-01', 'Activo'),
-('30113355', 'Andres',    'Acosta',    'andres@email.com',          '2026-02-05', 'Activo'),
-('26998877', 'Silvia',    'Medina',    'silvia@email.com',          '2026-02-10', 'Suspendido'),
-('44556677', 'Martin',    'Rojas',     'martin@email.com',          '2026-02-15', 'Activo'),
-('37221100', 'Valentino', 'Gussalli',  'valentino@email.com',       '2026-02-20', 'Activo'),
-('32445588', 'Roberto',   'Castro',    'roberto@email.com',         '2026-03-01', 'Activo'),
-('24887766', 'Teresa',    'Ortiz',     'teresa@email.com',          '2026-03-05', 'Activo'),
-('41998833', 'Fernando',  'Silva',     'fernando@email.com',        '2026-03-10', 'Activo'),
-('35667788', 'Patricia',  'Nuñez',     'patricia@email.com',        '2026-03-15', 'Activo'),
-('29334455', 'Alejandro', 'Cruz',      'alejandro@email.com',       '2026-03-20', 'Activo'),
-('46112233', 'Natalia',   'Reyes',     'natalia@email.com',         '2026-04-01', 'Activo'),
-('38990011', 'Hugo',      'Morales',   'hugo@email.com',            '2026-04-05', 'Activo'),
-('31223344', 'Luciano',   'Herrera',   'luciano@email.com',         '2026-04-10', 'Activo'),
-('40556677', 'Mariano',   'Luna',      'mariano@email.com',         '2026-04-15', 'Activo'),
-('36119988', 'Valeria',   'Cabrera',   'valeria@email.com',         '2026-04-20', 'Activo');
+('28456789', 'Maria',     'Gomez',      'maria@email.com',           '2025-02-15', 'Activo'),
+('41234567', 'Carlos',    'Lopez',      'carlos@email.com',          '2025-03-20', 'Suspendido'),
+('33987654', 'Ana',       'Martinez',   'ana@email.com',             '2025-04-25', 'Activo'),
+('29112233', 'Luis',      'Rodriguez',  'luis@email.com',            '2025-05-30', 'Activo'),
+('45678901', 'Laura',     'Fernandez',  'laura@email.com',           '2025-06-05', 'Activo'),
+('31445566', 'Diego',     'Gonzalez',   'diego@email.com',           '2025-07-10', 'Activo'),
+('40123987', 'Sofia',     'Diaz',       'sofia@email.com',           '2025-08-15', 'Activo'),
+('27889900', 'Valentin',  'Paccot',     'PP@email.com',              '2025-09-20', 'Baja'),
+('38556677', 'Marta',     'Alvarez',    'marta@email.com',           '2025-10-25', 'Activo'),
+('42334455', 'Pedro',     'Romero',     'pedro@email.com',           '2026-01-05', 'Activo'),
+('36778899', 'Lucia',     'Suarez',     'lucia@email.com',           '2026-01-10', 'Activo'),
+('25112244', 'Jorge',     'Torres',     'jorge@email.com',           '2026-01-15', 'Activo'),
+('39445522', 'Elena',     'Ruiz',       'elena@email.com',           '2026-01-20', 'Activo'),
+('34556611', 'Camilo',    'Tommasi',    'camilo@email.com',          '2026-01-25', 'Activo'),
+('43223344', 'Paula',     'Flores',     'paula@email.com',           '2026-02-01', 'Activo'),
+('30113355', 'Andres',    'Acosta',     'andres@email.com',          '2026-02-05', 'Activo'),
+('26998877', 'Silvia',    'Medina',     'silvia@email.com',          '2026-02-10', 'Suspendido'),
+('44556677', 'Martin',    'Rojas',      'martin@email.com',          '2026-02-15', 'Activo'),
+('37221100', 'Valentino', 'Gussalli',   'valentino@email.com',       '2026-02-20', 'Activo'),
+('32445588', 'Roberto',   'Castro',     'roberto@email.com',         '2026-03-01', 'Activo'),
+('24887766', 'Teresa',    'Ortiz',      'teresa@email.com',          '2026-03-05', 'Activo'),
+('41998833', 'Fernando',  'Silva',      'fernando@email.com',        '2026-03-10', 'Activo'),
+('35667788', 'Patricia',  'Nuñez',      'patricia@email.com',        '2026-03-15', 'Activo'),
+('29334455', 'Alejandro', 'Cruz',       'alejandro@email.com',       '2026-03-20', 'Activo'),
+('46112233', 'Natalia',   'Reyes',      'natalia@email.com',         '2026-04-01', 'Activo'),
+('38990011', 'Hugo',      'Morales',    'hugo@email.com',            '2026-04-05', 'Activo'),
+('31223344', 'Luciano',   'Herrera',    'luciano@email.com',         '2026-04-10', 'Activo'),
+('40556677', 'Mariano',   'Luna',       'mariano@email.com',         '2026-04-15', 'Activo'),
+('36119988', 'Valeria',   'Cabrera',    'valeria@email.com',         '2026-04-20', 'Activo'),
+('37001122', 'Gabriel',   'Pereyra',    'gabriel.pereyra@email.com',  '2026-01-08', 'Activo'),
+('40223344', 'Florencia', 'Sosa',       'florencia.sosa@email.com',   '2026-01-12', 'Activo'),
+('33445566', 'Tomas',     'Ibarra',     'tomas.ibarra@email.com',     '2026-01-18', 'Activo'),
+('28667788', 'Lautaro',   'Vega',       'lautaro.vega@email.com',     '2026-01-22', 'Activo'),
+('45889900', 'Agustina',  'Molina',     'agustina.molina@email.com',  '2026-01-28', 'Suspendido'),
+('31002233', 'Bruno',     'Carrizo',    'bruno.carrizo@email.com',    '2026-02-02', 'Activo'),
+('39224455', 'Candela',   'Ledesma',    'candela.ledesma@email.com',  '2026-02-08', 'Activo'),
+('26446677', 'Ezequiel',  'Funes',      'ezequiel.funes@email.com',   '2026-02-12', 'Activo'),
+('44668899', 'Milagros',  'Aguero',     'milagros.aguero@email.com',  '2026-02-18', 'Activo'),
+('29880011', 'Nicolas',   'Benitez',    'nicolas.benitez@email.com',  '2026-02-22', 'Baja'),
+('37102233', 'Florencia', 'Quiroga',    'florencia.quiroga@email.com','2026-02-28', 'Activo'),
+('41324455', 'Ignacio',   'Paz',        'ignacio.paz@email.com',      '2026-03-04', 'Activo'),
+('25546677', 'Julieta',   'Campos',     'julieta.campos@email.com',   '2026-03-08', 'Activo'),
+('38768899', 'Maximiliano','Ferreyra',  'maxi.ferreyra@email.com',    '2026-03-12', 'Activo'),
+('33980011', 'Rocio',     'Maidana',    'rocio.maidana@email.com',    '2026-03-16', 'Activo'),
+('46102244', 'Franco',    'Villalba',   'franco.villalba@email.com',  '2026-03-20', 'Activo'),
+('30324466', 'Antonella', 'Barrios',    'antonella.barrios@email.com','2026-03-24', 'Suspendido'),
+('24546688', 'Joaquin',   'Sanchez',    'joaquin.sanchez@email.com',  '2026-03-28', 'Activo'),
+('41768800', 'Catalina',  'Ojeda',      'catalina.ojeda@email.com',   '2026-04-02', 'Activo'),
+('35980022', 'Santino',   'Cabral',     'santino.cabral@email.com',   '2026-04-06', 'Activo'),
+('29102244', 'Abril',     'Godoy',      'abril.godoy@email.com',      '2026-04-10', 'Activo'),
+('46324466', 'Bautista',  'Acuña',      'bautista.acuna@email.com',   '2026-04-14', 'Activo'),
+('38546688', 'Mia',       'Bordon',     'mia.bordon@email.com',       '2026-04-18', 'Activo'),
+('31768800', 'Thiago',    'Aranda',     'thiago.aranda@email.com',    '2026-04-22', 'Activo'),
+('40980022', 'Renata',    'Coronel',    'renata.coronel@email.com',   '2026-04-26', 'Activo'),
+('36102255', 'Dante',     'Quintana',   'dante.quintana@email.com',   '2026-04-30', 'Activo'),
+('27324477', 'Lola',      'Avalos',     'lola.avalos@email.com',      '2026-05-04', 'Activo'),
+('43546699', 'Benicio',   'Heredia',    'benicio.heredia@email.com',  '2026-05-08', 'Activo'),
+('32768811', 'Helena',    'Soria',      'helena.soria@email.com',     '2026-05-12', 'Activo'),
+('45980033', 'Felipe',    'Bazan',      'felipe.bazan@email.com',     '2026-05-16', 'Activo'),
+('28102266', 'Olivia',    'Lemos',      'olivia.lemos@email.com',     '2026-05-20', 'Activo'),
+('39324488', 'Mateo',     'Escobar',    'mateo.escobar@email.com',    '2026-05-24', 'Activo'),
+('25546700', 'Zoe',       'Toledo',     'zoe.toledo@email.com',       '2026-05-28', 'Suspendido'),
+('41768822', 'Ramiro',    'Salinas',    'ramiro.salinas@email.com',   '2026-06-01', 'Activo'),
+('34980044', 'Pilar',     'Vargas',     'pilar.vargas@email.com',     '2026-06-05', 'Activo');
 
--- 8. SANCIONES
+-- 9. SANCIONES
 INSERT INTO SANCION (id_socio, tipo, fecha_inicio, fecha_fin, motivo) VALUES
--- Sanciones activas (fecha_fin >= hoy 2026-06-09)
 (3,  'Mora',  '2026-06-01', '2026-06-20', 'Devolución tardía — 7 días de mora'),
 (18, 'Daño',  '2026-06-05', '2026-07-05', 'Hojas arrancadas en ejemplar devuelto'),
 (9,  'Mora',  '2026-05-20', '2026-06-10', 'Préstamo vencido sin devolución'),
--- Sanciones históricas (ya cumplidas, para enriquecer reportes)
 (1,  'Mora',  '2026-01-10', '2026-01-20', 'Sanción cumplida — 3 días de mora'),
 (2,  'Mora',  '2025-11-01', '2025-11-10', 'Devolución con 2 días de retraso'),
 (5,  'Daño',  '2025-09-15', '2025-10-15', 'Tapa dañada en libro de SO'),
 (7,  'Mora',  '2026-02-10', '2026-02-20', 'Vencimiento sin aviso'),
 (11, 'Mora',  '2026-03-05', '2026-03-12', 'Retraso en devolución de 4 días'),
-(14, 'Mora',  '2026-04-01', '2026-04-08', 'Mora leve — 2 días');
+(14, 'Mora',  '2026-04-01', '2026-04-08', 'Mora leve — 2 días'),
+(35, 'Mora',  '2026-05-10', '2026-05-25', 'Devolución tardía — 5 días de mora'),
+(40, 'Daño',  '2026-04-12', '2026-05-12', 'Lomo del libro roto al devolverlo'),
+(43, 'Mora',  '2026-03-15', '2026-03-25', 'Retraso de 6 días en devolución'),
+(48, 'Mora',  '2026-02-20', '2026-03-01', 'Mora leve — 3 días'),
+(52, 'Daño',  '2026-01-15', '2026-02-15', 'Manchas de humedad en ejemplar'),
+(58, 'Mora',  '2026-05-25', '2026-06-10', 'Préstamo vencido sin devolución'),
+(61, 'Mora',  '2026-04-28', '2026-05-08', 'Vencimiento sin aviso previo'),
+(64, 'Daño',  '2026-03-22', '2026-04-22', 'Hojas subrayadas con tinta indeleble');
 
--- 9. PRÉSTAMOS (55 registros)
-
+-- 10. PRÉSTAMOS
 INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
--- ---- ACTIVOS (26 préstamos — coinciden con ejemplares Prestados) ----
 (1,  1,  '2026-05-26', '2026-06-09', NULL, 'Activo'),
 (2,  4,  '2026-05-28', '2026-06-11', NULL, 'Activo'),
 (4,  5,  '2026-06-01', '2026-06-15', NULL, 'Activo'),
@@ -269,7 +392,18 @@ INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, 
 (28, 63, '2026-06-04', '2026-06-18', NULL, 'Activo'),
 (29, 64, '2026-06-05', '2026-06-19', NULL, 'Activo'),
 (30, 69, '2026-06-02', '2026-06-16', NULL, 'Activo'),
--- ---- VENCIDOS (7 préstamos — fecha_vencimiento pasada, sin devolver) ----
+(31, 78,  '2026-06-03', '2026-06-17', NULL, 'Activo'),
+(32, 84,  '2026-06-04', '2026-06-18', NULL, 'Activo'),
+(33, 89,  '2026-06-01', '2026-06-15', NULL, 'Activo'),
+(34, 93,  '2026-06-02', '2026-06-16', NULL, 'Activo'),
+(36, 97,  '2026-06-05', '2026-06-19', NULL, 'Activo'),
+(37, 101, '2026-06-03', '2026-06-17', NULL, 'Activo'),
+(38, 104, '2026-06-04', '2026-06-18', NULL, 'Activo'),
+(39, 108, '2026-06-01', '2026-06-15', NULL, 'Activo'),
+(41, 112, '2026-06-02', '2026-06-16', NULL, 'Activo'),
+(42, 117, '2026-06-05', '2026-06-19', NULL, 'Activo'),
+(44, 122, '2026-06-03', '2026-06-17', NULL, 'Activo'),
+(45, 126, '2026-06-04', '2026-06-18', NULL, 'Activo'),
 (1,  71, '2026-05-01', '2026-05-15', NULL, 'Vencido'),
 (2,  74, '2026-04-10', '2026-04-24', NULL, 'Vencido'),
 (4,  6,  '2026-04-20', '2026-05-04', NULL, 'Vencido'),
@@ -277,7 +411,11 @@ INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, 
 (10, 34, '2026-05-10', '2026-05-24', NULL, 'Vencido'),
 (13, 43, '2026-04-15', '2026-04-29', NULL, 'Vencido'),
 (20, 55, '2026-05-08', '2026-05-22', NULL, 'Vencido'),
--- ---- DEVUELTOS (22 préstamos — historial variado) ----
+(33, 81,  '2026-04-25', '2026-05-09', NULL, 'Vencido'),
+(36, 91,  '2026-05-01', '2026-05-15', NULL, 'Vencido'),
+(39, 99,  '2026-05-12', '2026-05-26', NULL, 'Vencido'),
+(42, 110, '2026-04-18', '2026-05-02', NULL, 'Vencido'),
+(46, 130, '2026-05-20', '2026-06-03', NULL, 'Vencido'),
 (1,  2,  '2026-01-05', '2026-01-19', '2026-01-18', 'Devuelto'),
 (2,  7,  '2026-01-10', '2026-01-24', '2026-01-22', 'Devuelto'),
 (3,  11, '2025-11-01', '2025-11-15', '2025-11-14', 'Devuelto'),
@@ -299,4 +437,24 @@ INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, 
 (22, 48, '2026-05-01', '2026-05-15', '2026-05-13', 'Devuelto'),
 (25, 57, '2026-03-25', '2026-04-08', '2026-04-06', 'Devuelto'),
 (27, 61, '2026-04-20', '2026-05-04', '2026-05-02', 'Devuelto'),
-(28, 66, '2026-05-10', '2026-05-24', '2026-05-22', 'Devuelto');
+(28, 66, '2026-05-10', '2026-05-24', '2026-05-22', 'Devuelto'),
+(31, 79,  '2026-02-01', '2026-02-15', '2026-02-14', 'Devuelto'),
+(32, 85,  '2026-02-10', '2026-02-24', '2026-02-23', 'Devuelto'),
+(34, 94,  '2026-02-20', '2026-03-06', '2026-03-04', 'Devuelto'),
+(35, 96,  '2026-03-01', '2026-03-15', '2026-03-20', 'Devuelto'),
+(37, 102, '2026-03-10', '2026-03-24', '2026-03-22', 'Devuelto'),
+(40, 109, '2026-03-20', '2026-04-03', '2026-04-12', 'Devuelto'),
+(41, 113, '2026-04-01', '2026-04-15', '2026-04-13', 'Devuelto'),
+(43, 119, '2026-04-10', '2026-04-24', '2026-04-21', 'Devuelto'),
+(47, 132, '2026-04-15', '2026-04-29', '2026-04-27', 'Devuelto'),
+(48, 134, '2026-04-20', '2026-05-04', '2026-05-15', 'Devuelto'),
+(50, 138, '2026-05-01', '2026-05-15', '2026-05-13', 'Devuelto'),
+(51, 140, '2026-05-05', '2026-05-19', '2026-05-17', 'Devuelto'),
+(53, 144, '2026-05-10', '2026-05-24', '2026-05-22', 'Devuelto'),
+(55, 148, '2026-05-15', '2026-05-29', '2026-05-27', 'Devuelto'),
+(57, 152, '2026-05-20', '2026-06-03', '2026-06-01', 'Devuelto'),
+(59, 156, '2026-05-25', '2026-06-08', '2026-06-06', 'Devuelto'),
+(60, 160, '2026-05-28', '2026-06-11', '2026-06-09', 'Devuelto'),
+(62, 163, '2026-05-30', '2026-06-13', '2026-06-12', 'Devuelto'),
+(63, 165, '2026-06-01', '2026-06-15', '2026-06-14', 'Devuelto'),
+(65, 167, '2026-06-02', '2026-06-16', '2026-06-15', 'Devuelto');
