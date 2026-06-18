@@ -13,7 +13,7 @@ INSERT INTO GENERO (nombre, descripcion) VALUES
 ('Desarrollo Web',             'Frontend, backend y arquitecturas web modernas'),
 ('Compiladores',               'Análisis léxico, sintáctico y generación de código');
 
--- 2. NACIONALIDADES (7) 
+-- 2. NACIONALIDADES 
 INSERT INTO NACIONALIDAD (nombre) VALUES
 ('Francesa'),       -- ID 1
 ('Británica'),      -- ID 2
@@ -28,7 +28,7 @@ INSERT INTO NACIONALIDAD (nombre) VALUES
 ('Israelí'),    -- 11
 ('Japonesa');   -- 12
 
--- 3. AUTORES (10) - Apuntando a id_nacionalidad
+-- 3. AUTORES
 INSERT INTO AUTOR (nombre, apellido, id_nacionalidad) VALUES
 ('Philippe',  'Kruchten',    1), -- Francesa
 ('Ian',       'Sommerville', 2), -- Británica
@@ -56,7 +56,7 @@ INSERT INTO AUTOR (nombre, apellido, id_nacionalidad) VALUES
 ('Yukihiro', 'Matsumoto',    12), -- Japonesa
 ('Edsger',   'Dijkstra',     10); -- Holandesa
 
--- 4. LIBROS (20)
+-- 4. LIBROS
 INSERT INTO LIBRO (isbn, titulo, anio_publicacion, stock_total, stock_disponible) VALUES
 ('978-0201123456', 'Arquitectura de Software: Vistas 4+1',         1995, 3, 2),
 ('978-0133970777', 'Ingeniería de Software: Un Enfoque Práctico',   2014, 5, 2),
@@ -109,7 +109,7 @@ INSERT INTO LIBRO (isbn, titulo, anio_publicacion, stock_total, stock_disponible
 ('978-0596158039', 'Programación Funcional con Scala',                  2011, 3, 1),
 ('978-1491901859', 'Microservicios: Diseño y Construcción',             2015, 4, 2);
 
--- 5. LIBRO_AUTOR (todos los libros con autor)
+-- 5. LIBRO_AUTOR
 INSERT INTO LIBRO_AUTOR (isbn_libro, id_autor) VALUES
 ('978-0201123456', 1),
 ('978-0133970777', 9),
@@ -169,7 +169,7 @@ INSERT INTO LIBRO_AUTOR (isbn_libro, id_autor) VALUES
 ('978-0596158039', 17),
 ('978-1491901859', 17);
 
--- 6. LIBRO_GENERO (todos los libros con género)
+-- 6. LIBRO_GENERO 
 INSERT INTO LIBRO_GENERO (isbn_libro, id_genero) VALUES
 ('978-0201123456', 1),
 ('978-0133970777', 1),
@@ -223,7 +223,7 @@ INSERT INTO LIBRO_GENERO (isbn_libro, id_genero) VALUES
 ('978-0596158039', 5),
 ('978-1491901859', 9);
 
--- 7. EJEMPLARES (todos los libros tienen ejemplares)
+-- 7. EJEMPLARES 
 INSERT INTO EJEMPLAR (isbn_libro, nro_ejemplar, estado_fisico) VALUES
 ('978-0201123456', 1, 'Prestado'), ('978-0201123456', 2, 'Disponible'), ('978-0201123456', 3, 'Disponible'),
 ('978-0133970777', 1, 'Prestado'), ('978-0133970777', 2, 'Prestado'), ('978-0133970777', 3, 'Prestado'), ('978-0133970777', 4, 'Disponible'), ('978-0133970777', 5, 'Disponible'),
@@ -276,7 +276,7 @@ INSERT INTO EJEMPLAR (isbn_libro, nro_ejemplar, estado_fisico) VALUES
 ('978-0596158039', 1, 'Prestado'), ('978-0596158039', 2, 'Disponible'), ('978-0596158039', 3, 'Disponible'),
 ('978-1491901859', 1, 'Prestado'), ('978-1491901859', 2, 'Prestado'), ('978-1491901859', 3, 'Disponible'), ('978-1491901859', 4, 'Disponible');
 
--- 8. SOCIOS (30)
+-- 8. SOCIOS 
 INSERT INTO SOCIO (dni, nombre, apellido, email, fecha_alta, estado) VALUES
 ('35123456', 'Juan',      'Weigandt',     'juancraftero777@email.com', '2025-01-10', 'Activo'),
 ('28456789', 'Maria',     'Gomez',      'maria@email.com',           '2025-02-15', 'Activo'),
