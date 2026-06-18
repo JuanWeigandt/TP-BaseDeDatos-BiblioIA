@@ -1,8 +1,8 @@
 USE BiblioIA;
 
 -- ======================================================================
--- 1. vista_catalogo_libros
--- Catálogo completo con autores y géneros agrupados.
+-- 1. vista_catalogo_libros (ACTUALIZADA CON NACIONALIDAD)
+-- Catálogo completo con autores (y su nacionalidad) y géneros agrupados.
 -- ======================================================================
 CREATE OR REPLACE VIEW vista_catalogo_libros AS
 SELECT
@@ -11,13 +11,15 @@ SELECT
     l.anio_publicacion,
     l.stock_total,
     l.stock_disponible,
-    GROUP_CONCAT(DISTINCT CONCAT(a.nombre, ' ', a.apellido) ORDER BY a.apellido SEPARATOR ', ') AS autores,
+    -- Concatenamos Nombre, Apellido y (Nacionalidad)
+    GROUP_CONCAT(DISTINCT CONCAT(a.nombre, ' ', a.apellido, ' (', n.nombre, ')') ORDER BY a.apellido SEPARATOR ', ') AS autores,
     GROUP_CONCAT(DISTINCT g.nombre ORDER BY g.nombre SEPARATOR ', ') AS generos
 FROM LIBRO l
-LEFT JOIN LIBRO_AUTOR la ON l.isbn = la.isbn_libro
-LEFT JOIN AUTOR a        ON la.id_autor = a.id_autor
+LEFT JOIN LIBRO_AUTOR la  ON l.isbn = la.isbn_libro
+LEFT JOIN AUTOR a         ON la.id_autor = a.id_autor
+LEFT JOIN NACIONALIDAD n  ON a.id_nacionalidad = n.id_nacionalidad -- <-- EL NUEVO JOIN
 LEFT JOIN LIBRO_GENERO lg ON l.isbn = lg.isbn_libro
-LEFT JOIN GENERO g       ON lg.id_genero = g.id_genero
+LEFT JOIN GENERO g        ON lg.id_genero = g.id_genero
 GROUP BY l.isbn, l.titulo, l.anio_publicacion, l.stock_total, l.stock_disponible;
 
 -- ======================================================================
