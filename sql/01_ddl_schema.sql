@@ -2,7 +2,41 @@ DROP DATABASE IF EXISTS BiblioIA;
 CREATE DATABASE BiblioIA;
 USE BiblioIA;
 
--- 1. TABLAS MAESTRAS (Sin dependencias)
+-- 1. TABLAS DE DOMINIO
+
+CREATE TABLE ESTADO_SOCIO (
+    id_estado_socio INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE ESTADO_EJEMPLAR (
+    id_estado_ejemplar INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE ESTADO_PRESTAMO (
+    id_estado_prestamo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE ESTADO_RESERVA (
+    id_estado_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE NACIONALIDAD(
+    id_nacionalidad INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+CREATE TABLE GENERO (
+    id_genero INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL,
+    descripcion TEXT
+);
+
+-- 2. TABLAS MAESTRAS PRINCIPALES
+
 CREATE TABLE SOCIO (
     id_socio INT AUTO_INCREMENT PRIMARY KEY,
     dni VARCHAR(15) UNIQUE NOT NULL,
@@ -10,19 +44,8 @@ CREATE TABLE SOCIO (
     apellido VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     fecha_alta DATE NOT NULL,
-    estado VARCHAR(20) DEFAULT 'Activo',
-    CONSTRAINT chk_estado_socio CHECK (estado IN ('Activo', 'Suspendido', 'Baja'))
-);
-
-CREATE TABLE NACIONALIDAD(
-	id_nacionalidad INT AUTO_INCREMENT PRIMARY KEY,
-	nombre VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE GENERO (
-    id_genero INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) UNIQUE NOT NULL,
-    descripcion TEXT
+    id_estado_socio INT NOT NULL DEFAULT 1, -- Por defecto '1' (Activo)
+    FOREIGN KEY (id_estado_socio) REFERENCES ESTADO_SOCIO(id_estado_socio) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE LIBRO (
@@ -34,7 +57,7 @@ CREATE TABLE LIBRO (
     CONSTRAINT chk_stock CHECK (stock_disponible >= 0 AND stock_disponible <= stock_total)
 );
 
--- 2. TABLAS INTERMEDIAS (Normalización Muchos a Muchos)
+-- 3. TABLAS INTERMEDIAS Y DEPENDIENTES DIRECTAS
 
 CREATE TABLE AUTOR (
     id_autor INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,15 +83,14 @@ CREATE TABLE LIBRO_GENERO (
     FOREIGN KEY (id_genero) REFERENCES GENERO(id_genero) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- 3. TABLAS DEPENDIENTES DIRECTAS
 CREATE TABLE EJEMPLAR (
     id_ejemplar INT AUTO_INCREMENT PRIMARY KEY,
     isbn_libro VARCHAR(20) NOT NULL,
     nro_ejemplar INT NOT NULL,
-    estado_fisico VARCHAR(20) DEFAULT 'Disponible', 
+    id_estado_ejemplar INT NOT NULL DEFAULT 1,  -- Por defecto '1' (Disponible)
     FOREIGN KEY (isbn_libro) REFERENCES LIBRO(isbn) ON DELETE RESTRICT ON UPDATE CASCADE,
-    UNIQUE (isbn_libro, nro_ejemplar),
-    CONSTRAINT chk_estado_ejemplar CHECK (estado_fisico IN ('Disponible', 'Prestado', 'Dañado', 'Baja'))
+    FOREIGN KEY (id_estado_ejemplar) REFERENCES ESTADO_EJEMPLAR(id_estado_ejemplar) ON DELETE RESTRICT ON UPDATE CASCADE,
+    UNIQUE (isbn_libro, nro_ejemplar)
 );
 
 CREATE TABLE SANCION (
@@ -82,7 +104,8 @@ CREATE TABLE SANCION (
     CONSTRAINT chk_fechas_sancion CHECK (fecha_fin >= fecha_inicio)
 );
 
--- 4. TABLA TRANSACCIONAL (El centro del negocio)
+-- 4. TABLAS TRANSACCIONALES (Ciclo Operativo de la Biblioteca)
+
 CREATE TABLE PRESTAMO (
     id_prestamo INT AUTO_INCREMENT PRIMARY KEY,
     id_socio INT NOT NULL,
@@ -90,15 +113,27 @@ CREATE TABLE PRESTAMO (
     fecha_prestamo DATE NOT NULL,
     fecha_vencimiento DATE NOT NULL,
     fecha_devolucion DATE NULL,
-    estado VARCHAR(20) DEFAULT 'Activo',
+    id_estado_prestamo INT NOT NULL DEFAULT 1, -- Por defecto '1' (Activo)
     FOREIGN KEY (id_socio) REFERENCES SOCIO(id_socio) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (id_ejemplar) REFERENCES EJEMPLAR(id_ejemplar) ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT chk_fechas_prestamo CHECK (fecha_vencimiento >= fecha_prestamo),
-    CONSTRAINT chk_estado_prestamo CHECK (estado IN ('Activo', 'Devuelto', 'Vencido'))
+    FOREIGN KEY (id_estado_prestamo) REFERENCES ESTADO_PRESTAMO(id_estado_prestamo) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT chk_fechas_prestamo CHECK (fecha_vencimiento >= fecha_prestamo)
 );
 
--- 5. TABLA DE AUDITORÍA (Requerida para Triggers)
-CREATE TABLE AUDITORIA_PRESTAMOS (
+CREATE TABLE RESERVA (
+    id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+    id_socio INT NOT NULL,
+    isbn_libro VARCHAR(20) NOT NULL,
+    fecha_solicitud DATE NOT NULL,
+    id_estado_reserva INT NOT NULL DEFAULT 1,  -- Por defecto '1' (Pendiente)
+    FOREIGN KEY (id_socio) REFERENCES SOCIO(id_socio) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (isbn_libro) REFERENCES LIBRO(isbn) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_estado_reserva) REFERENCES ESTADO_RESERVA(id_estado_reserva) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- 5. TABLA DE AUDITORÍA E ÍNDICES
+
+CREATE TABLE AUDITORIA_PRESTAMO (
     id_auditoria INT AUTO_INCREMENT PRIMARY KEY,
     id_prestamo INT NOT NULL,
     accion VARCHAR(10) NOT NULL,
@@ -106,3 +141,7 @@ CREATE TABLE AUDITORIA_PRESTAMOS (
     usuario_bd VARCHAR(50) NOT NULL,
     detalles TEXT
 );
+
+-- Índices para optimizar las consultas del Agente IA
+CREATE INDEX idx_libro_titulo ON LIBRO(titulo);
+CREATE INDEX idx_socio_dni ON SOCIO(dni);
