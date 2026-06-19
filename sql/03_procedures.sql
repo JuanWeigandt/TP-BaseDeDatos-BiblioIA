@@ -2,9 +2,8 @@ USE BiblioIA;
 
 DELIMITER //
 
--- ======================================================================
 -- 1. sp_registrar_prestamo
--- ======================================================================
+
 DROP PROCEDURE IF EXISTS sp_registrar_prestamo //
 CREATE PROCEDURE sp_registrar_prestamo(
     IN p_id_socio INT,
@@ -14,10 +13,10 @@ CREATE PROCEDURE sp_registrar_prestamo(
 BEGIN
     DECLARE v_sanciones INT DEFAULT 0;
     DECLARE v_prestamos_activos INT DEFAULT 0;
-    DECLARE v_estado_ejemplar VARCHAR(20);
+    DECLARE v_estado_ejemplar INT; 
     DECLARE v_existe_socio INT;
     DECLARE v_existe_ejemplar INT;
-    DECLARE v_estado_socio VARCHAR(20);
+    DECLARE v_estado_socio INT; 
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -31,9 +30,9 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El socio especificado no existe.';
     END IF;
 
-    -- CORRECCIÓN: verificar que el socio esté Activo (no Suspendido ni Baja)
-    SELECT estado INTO v_estado_socio FROM SOCIO WHERE id_socio = p_id_socio;
-    IF v_estado_socio != 'Activo' THEN
+    -- Verificar que el socio esté Activo (1)
+    SELECT id_estado_socio INTO v_estado_socio FROM SOCIO WHERE id_socio = p_id_socio;
+    IF v_estado_socio != 1 THEN -- 1 = 'Activo'
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El socio no está activo (Suspendido o Baja).';
     END IF;
 
@@ -54,38 +53,38 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El socio tiene sanciones activas y no puede pedir libros.';
     END IF;
 
-    -- Validar límite de 3 préstamos activos
+    -- Validar límite de 3 préstamos activos (1)
     SELECT COUNT(*) INTO v_prestamos_activos
     FROM PRESTAMO
-    WHERE id_socio = p_id_socio AND estado = 'Activo';
+    WHERE id_socio = p_id_socio AND id_estado_prestamo = 1; -- 1 = 'Activo'
 
     IF v_prestamos_activos >= 3 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El socio alcanzó el límite de 3 préstamos activos.';
     END IF;
 
-    -- Validar disponibilidad del ejemplar con bloqueo
-    SELECT estado_fisico INTO v_estado_ejemplar
+    -- Validar disponibilidad del ejemplar con bloqueo (1)
+    SELECT id_estado_ejemplar INTO v_estado_ejemplar
     FROM EJEMPLAR
     WHERE id_ejemplar = p_id_ejemplar FOR UPDATE;
 
-    IF v_estado_ejemplar != 'Disponible' THEN
+    IF v_estado_ejemplar != 1 THEN -- 1 = 'Disponible'
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El ejemplar no está disponible actualmente.';
     END IF;
 
-    -- Registrar el préstamo
-    INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, estado)
-    VALUES (p_id_socio, p_id_ejemplar, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL p_dias_prestamo DAY), 'Activo');
+    -- Registrar el préstamo (Estado 1 = 'Activo')
+    INSERT INTO PRESTAMO (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, id_estado_prestamo)
+    VALUES (p_id_socio, p_id_ejemplar, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL p_dias_prestamo DAY), 1);
 
+    -- Actualizar a 'Prestado' (2)
     UPDATE EJEMPLAR
-    SET estado_fisico = 'Prestado'
+    SET id_estado_ejemplar = 2
     WHERE id_ejemplar = p_id_ejemplar;
 
     COMMIT;
 END //
 
--- ======================================================================
 -- 2. sp_generar_sancion
--- ======================================================================
+
 DROP PROCEDURE IF EXISTS sp_generar_sancion //
 CREATE PROCEDURE sp_generar_sancion(
     IN p_id_socio INT,
@@ -106,19 +105,18 @@ BEGIN
     -- al insertar en SANCION. No es necesario hacerlo acá.
 END //
 
--- ======================================================================
 -- 3. sp_registrar_devolucion
--- ======================================================================
+
 DROP PROCEDURE IF EXISTS sp_registrar_devolucion //
 CREATE PROCEDURE sp_registrar_devolucion(
     IN p_id_prestamo INT,
-    IN p_estado_final_ejemplar VARCHAR(20)
+    IN p_estado_final_ejemplar INT -- Cambiado a INT (1=Disponible, 3=Dañado)
 )
 BEGIN
     DECLARE v_id_socio INT;
     DECLARE v_id_ejemplar INT;
     DECLARE v_fecha_vencimiento DATE;
-    DECLARE v_estado_prestamo VARCHAR(20);
+    DECLARE v_estado_prestamo INT; -- Cambiado a INT
     DECLARE v_dias_mora INT DEFAULT 0;
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -129,23 +127,23 @@ BEGIN
 
     START TRANSACTION;
 
-    SELECT id_socio, id_ejemplar, fecha_vencimiento, estado
+    SELECT id_socio, id_ejemplar, fecha_vencimiento, id_estado_prestamo
     INTO v_id_socio, v_id_ejemplar, v_fecha_vencimiento, v_estado_prestamo
     FROM PRESTAMO
     WHERE id_prestamo = p_id_prestamo FOR UPDATE;
 
-    IF v_estado_prestamo = 'Devuelto' THEN
+    IF v_estado_prestamo = 2 THEN -- 2 = 'Devuelto'
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El préstamo ya se encuentra devuelto.';
     END IF;
 
-    -- Actualizar estado físico del ejemplar
+    -- Actualizar estado físico del ejemplar (Ej: 1 o 3)
     UPDATE EJEMPLAR
-    SET estado_fisico = p_estado_final_ejemplar
+    SET id_estado_ejemplar = p_estado_final_ejemplar
     WHERE id_ejemplar = v_id_ejemplar;
 
-    -- Cerrar el préstamo (dispara trg_actualizar_stock automáticamente)
+    -- Cerrar el préstamo (Estado 2 = 'Devuelto')
     UPDATE PRESTAMO
-    SET fecha_devolucion = CURRENT_DATE, estado = 'Devuelto'
+    SET fecha_devolucion = CURRENT_DATE, id_estado_prestamo = 2
     WHERE id_prestamo = p_id_prestamo;
 
     -- Sanción por mora si corresponde
@@ -159,8 +157,8 @@ BEGIN
         );
     END IF;
 
-    -- Sanción adicional si el libro volvió dañado
-    IF p_estado_final_ejemplar = 'Dañado' THEN
+    -- Sanción adicional si el libro volvió dañado (3 = 'Dañado')
+    IF p_estado_final_ejemplar = 3 THEN
         CALL sp_generar_sancion(
             v_id_socio,
             'Daño a Material',
@@ -172,9 +170,8 @@ BEGIN
     COMMIT;
 END //
 
--- ======================================================================
 -- 4. sp_renovar_prestamo (BONUS)
--- ======================================================================
+
 DROP PROCEDURE IF EXISTS sp_renovar_prestamo //
 CREATE PROCEDURE sp_renovar_prestamo(
     IN p_id_prestamo INT,
@@ -182,7 +179,7 @@ CREATE PROCEDURE sp_renovar_prestamo(
 )
 BEGIN
     DECLARE v_id_socio INT;
-    DECLARE v_estado_prestamo VARCHAR(20);
+    DECLARE v_estado_prestamo INT; 
     DECLARE v_fecha_vencimiento DATE;
     DECLARE v_sanciones_activas INT;
 
@@ -194,12 +191,12 @@ BEGIN
 
     START TRANSACTION;
 
-    SELECT id_socio, estado, fecha_vencimiento
+    SELECT id_socio, id_estado_prestamo, fecha_vencimiento
     INTO v_id_socio, v_estado_prestamo, v_fecha_vencimiento
     FROM PRESTAMO
     WHERE id_prestamo = p_id_prestamo FOR UPDATE;
 
-    IF v_estado_prestamo != 'Activo' THEN
+    IF v_estado_prestamo != 1 THEN -- 1 = 'Activo'
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Solo se pueden renovar préstamos activos.';
     ELSEIF CURRENT_DATE > v_fecha_vencimiento THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: El préstamo ya está VENCIDO. No se puede renovar.';
