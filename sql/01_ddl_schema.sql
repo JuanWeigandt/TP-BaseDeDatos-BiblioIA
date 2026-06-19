@@ -144,4 +144,3 @@ CREATE TABLE AUDITORIA_PRESTAMO (
 
 -- Índices para optimizar las consultas del Agente IA
 CREATE INDEX idx_libro_titulo ON LIBRO(titulo);
-
