@@ -87,7 +87,7 @@ CREATE TRIGGER trg_audit_prestamo_ins
 AFTER INSERT ON PRESTAMO
 FOR EACH ROW
 BEGIN
-    INSERT INTO AUDITORIA_PRESTAMOS (id_prestamo, accion, usuario_bd, detalles)
+    INSERT INTO AUDITORIA_PRESTAMO (id_prestamo, accion, usuario_bd, detalles)
     VALUES (
         NEW.id_prestamo,
         'INSERT',
@@ -102,7 +102,7 @@ AFTER UPDATE ON PRESTAMO
 FOR EACH ROW
 BEGIN
     -- En la auditoría guardamos qué ID de estado cambió a cuál
-    INSERT INTO AUDITORIA_PRESTAMOS (id_prestamo, accion, usuario_bd, detalles)
+    INSERT INTO AUDITORIA_PRESTAMO (id_prestamo, accion, usuario_bd, detalles)
     VALUES (
         NEW.id_prestamo,
         'UPDATE',
@@ -116,7 +116,7 @@ CREATE TRIGGER trg_audit_prestamo_del
 AFTER DELETE ON PRESTAMO
 FOR EACH ROW
 BEGIN
-    INSERT INTO AUDITORIA_PRESTAMOS (id_prestamo, accion, usuario_bd, detalles)
+    INSERT INTO AUDITORIA_PRESTAMO (id_prestamo, accion, usuario_bd, detalles)
     VALUES (
         OLD.id_prestamo,
         'DELETE',

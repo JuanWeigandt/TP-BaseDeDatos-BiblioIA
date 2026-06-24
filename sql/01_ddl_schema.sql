@@ -144,3 +144,9 @@ CREATE TABLE AUDITORIA_PRESTAMO (
 
 -- Índices para optimizar las consultas del Agente IA
 CREATE INDEX idx_libro_titulo ON LIBRO(titulo);
+
+CREATE INDEX idx_autor_apellido ON AUTOR(apellido);
+
+CREATE INDEX idx_prestamo_vencimiento ON PRESTAMO(fecha_vencimiento);
+
+CREATE INDEX idx_sancion_fecha_fin ON SANCION(fecha_fin);
